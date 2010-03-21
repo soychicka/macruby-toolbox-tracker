@@ -1,47 +1,53 @@
 class Controller
-  attr_writer :friendsTableView
+  attr_writer :toolsTableView
 
   def awakeFromNib
-    @friends = []
-    @friendsTableView.dataSource = self
+    @tools = []
+    @toolsTableView.dataSource = self
   end
 
   def numberOfRowsInTableView(view)
-    @friends.size
+    @tools.size
   end
 
   def tableView(view, objectValueForTableColumn:column, row:index)
 	@index = index
-	f = @friends[index]
+	f = @tools[index]
     case column.identifier
-      when 'first_name'
-        f.first_name
-      when 'last_name'
-        f.last_name
+      when 'manufacturer'
+        f.manufacturer
+      when 'tool'
+        f.tool
+      when 'location'
+        f.location
     end
   end
 
   def tableView(view, setObjectValue:object, forTableColumn:column, row:index)
-    f = @friends[index]
+    f = @tools[index]
     case column.identifier
-      when 'first_name'
-        f.first_name = object
-      when 'last_name'
-        f.last_name = object
+      when 'manufacturer'
+        f.manufacturer = object
+      when 'tool'
+        f.tool = object
+      when 'location'
+        f.location = object
     end
   end
 
-  def addFriend(sender)
-    f = Friend.new
-    f.first_name = 'John'
-    f.last_name = 'Smith'
-    @friends << f
-    @friendsTableView.reloadData
+  def addTool(sender)
+    f = Tool.new
+    f.manufacturer = ''
+    f.tool = ''
+	f.location = 'closet'
+    @tools<< f
+    @toolsTableView.reloadData
   end
 
-  def deleteFriend(sender)
-	@friends.delete(@friends[@index])
-	@friendsTableView.reloadData
+  def deleteTool(sender)
+
+	@tools.delete(@tools[@index])	if @index
+	@toolsTableView.reloadData
 	
   end
 
